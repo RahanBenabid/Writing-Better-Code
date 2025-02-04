@@ -92,3 +92,52 @@ To simplify complexity analysis, we use asymptotic notation such as:
 For example, if an algorithm runs approximately  $5N^2 + 3N + 2$  operations, we simplify its growth rate to $O(N^2)$, ignoring constants and lower-order terms.
 
 But like seen before, we should also consider the **space complexity**, the amount of memory needed to be allocated in the RAM for the program to execute, i also should note that the space complexity is independent from the size of the problem instance, no matter the size of the problem instance, its extra space never changes.
+
+# Chapter 2
+
+When working on algorithms and programs, it’s important to ensure they are efficient and scalable, especially as problem sizes grow. Start by analyzing the data structures and algorithms you’re using, and ask yourself if there’s a better way to solve the problem or implement the solution. Performance can vary based on the hardware, so it’s crucial to model and predict runtime behavior as data scales.
+
+One effective way to predict performance is by using empirical models. By testing your program on smaller data sets, you can gather runtime data and use it to build mathematical models, such as linear, quadratic, or N log N, to estimate how the program will perform on larger data sets. For example, if your program processes data sets of 100, 1,000, and 10,000 elements, you can use this data to predict runtime for 100,000 or even 1,000,000 elements. The N log N model often provides the most accurate predictions for runtime as problem sizes increase.
+
+A practical example involves processing large data sets in a nightly batch job. If your prototype works well on small data sets, you can use empirical models to ensure it will handle much larger data sets efficiently. For instance, a model like T(N) = a × N × log(N) can accurately predict runtime for large problem sizes, helping you avoid performance bottlenecks.
+
+Another example is multiplying large integers. Traditional methods, like the grade-school algorithm, have a quadratic runtime (N²), meaning the time increases significantly as the number of digits grows. However, more advanced algorithms, like Karatsuba multiplication, have a runtime of N^1.585, which is much more efficient for large inputs. This shows that choosing the right algorithm can drastically improve performance.
+
+In summary, to ensure your programs are efficient and scalable:
+
+1. Analyze your algorithms and data structures to identify potential inefficiencies.
+2. Use empirical data from smaller problem instances to build mathematical models and predict runtime for larger inputs.
+3. Focus on models like N log N, which often provide accurate predictions for runtime growth.
+4. Consider advanced algorithms (like Karatsuba) for tasks that involve large inputs, as they can significantly improve performance.
+5. Always test and review your code to ensure it performs well across different problem sizes and hardware.
+
+By following these steps, you can optimize your programs to handle larger data sets efficiently and avoid performance issues.
+
+## Performance classes
+
+To identify which algorithm has the best performance, it’s good to classify them using mathemtical models, the goal is to predict the **worst runtime performance**, where `N` is the upper bound, so we try to work with a logic like "the algorithm will never be worse than this"
+
+For that scienctists have used something called Big O notation to calculate how efficient an algorithm is without depending on the hardware used, it is used for both the best case and worst case intance of a problem.
+
+So the goal is to estimate the time for an algorithm to process any problem instance of size N, it must be accurate for all the N instances, for that:
+1. find `k(N)`, how many times a key operation executes on a worst case scenario
+2. estimate that the number of machine insctructions executed in total would be a multiple of this count so `c * k(N)`, this is because  modern programming languages can be compiled into tends of hundreds of machine instructions
+
+So each performance class `O(f(N))` can be described as some `f(N)`, here are some examples:
+- `O(N)` is the linear complexity class, where `f(N) = N`.
+- `O(N1.585)` is the Karatsuba complexity class, where `f(N) = N1.585`
+- `O(N2)` is the quadratic complexity class, where `f(N) = N2`
+- `O(N log N)` is the complexity class where `f(N) = N × log N`.
+
+for example let’s take this simple code sample:
+
+```py
+for i in range(100):
+	for j in range(N):
+		ct = ct + 1
+```
+
+the total number of executions of ct = ct + 1 is: $100 \times N$
+
+however, when executing on a machine many times, the exact execution time depends on the machine running the code, everything will vary due to different CPUs speed, the memory used.
+
