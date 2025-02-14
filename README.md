@@ -139,5 +139,56 @@ for i in range(100):
 
 the total number of executions of ct = ct + 1 is: $100 \times N$
 
+
+
 however, when executing on a machine many times, the exact execution time depends on the machine running the code, everything will vary due to different CPUs speed, the memory used.
+
+## Complexity classes
+
+Let's take `log(N)` as an example, how this complexity works is when the execution time grows proportionally to the algorithm of the input size `n`, and the problem size is reduced by a constant factor in each step, a perfect example would be the binary search algorithm, here is an emplementation in python:
+
+```py
+def binary_search(A, target):
+	lo = 0
+	hi = len(A) - 1
+	
+	while lo <= hi:
+		mid = (lo + hi) // 2
+		
+		if target < A[mid]:
+			hi = mid - 1
+		elif target > A[mid]:
+			lo = mid + 1
+		else:
+			return mid
+	return -(lo+1)
+```
+
+So the `while` loop will be repeated when `lo <= hi`, and the first iteration starts with `N` values to search through, but in the second iteration, it turns into `N/2`, and it keeps getting devided by 2 until (in the worst scenario) it reaches 1.
+
+And to know how many times we divided by two, the quantity will be $k = \log_2(N)$, hence the logarithmic complexity, this is super efficient, as in one million values in an array, we need to loop only **20 times**.
+
+There are many complexity classes, but the most known are the following:
+- The linear, O(N), complexity class means complexity is directly proportional to the size of the problem instance.
+- A series of polynomial classes are all of increasing complexity—O(N^2), O(N^3), and so on—up to any fixed constant, O(N^c).
+- Sandwiched between O(N) and O(N^2) is O(N log N), which is often identified as the **best** complexity class for algorithm designers.
+- The last class is the exponential and factorial complexity O(N!) and O(2^N), these can solve very small problems and are inneficient most of the time in real world problems.
+
+The most important part of algorithms is knowing which is the **dominant one**, if we create an algorithm where a subset has a complexity of O(N^3) and another subset is of complexity O(N log N), the classification would be O(N^3), because it has a dominant impact on the overall complexity. Also multiplicative constants can be ignored, for example O(30*N) is the same as O(N).
+
+Here is a table that summerizes how complexity increments:
+
+| N     | log(N) | N     | N log N | N²       | N³         | 2ⁿ          | N!          |
+|-------|--------|-------|---------|----------|----------- |-------------|-------------|
+| 2     | 1      | 2     | 2       | 4        | 8          | 4           | 2           |
+| 4     | 2      | 4     | 8       | 16       | 64         | 16          | 24          |
+| 8     | 3      | 8     | 24      | 64       | 512        | 256         | 40,320      |
+| 16    | 4      | 16    | 64      | 256      | 4,096      | 65,536      | 2.1 × 10¹³  |
+| 32    | 5      | 32    | 160     | 1,024    | 32,768     | 4.3 × 10⁹   | 2.6 × 10³⁵  |
+| 64    | 6      | 64    | 384     | 4,096    | 262,144    | 1.8 × 10¹⁹  | 1.3 × 10⁶⁹  |
+| 128   | 7      | 128   | 896     | 16,384   | 2,097,152  | 3.4 × 10³⁸  | -           |
+| 256   | 8      | 256   | 2,048   | 65,536   | 16,777,216 | 1.2 × 10⁷⁷  | -           |
+| 512   | 9      | 512   | 4,608   | 262,144  | 1.3 × 10⁸  | -           | -           |
+| 1,024 | 10     | 1,024 | 10,240  | 1,048,576| 1.1 × 10⁹  | -           | -           |
+| 2,048 | 11     | 2,048 | 22,528  | 4,194,304| 8.6 × 10⁹  | -           | -           |
 
